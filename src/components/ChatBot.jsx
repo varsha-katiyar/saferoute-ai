@@ -2,38 +2,59 @@
 import React, { useState } from "react";
 
 function ChatBot() {
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
 
-  const sendMessage = () => {
-    const newChat = [...chat, { user: message }, { bot: "Stay aware of your surroundings and keep emergency contacts ready." }];
-    setChat(newChat);
+  const [message, setMessage] = useState("");
+  const [reply, setReply] = useState("");
+
+  const handleSend = () => {
+
+    const userMessage = message.toLowerCase();
+
+    if (userMessage.includes("safe")) {
+      setReply("Try to travel on well-lit roads and avoid isolated areas.");
+    }
+    else if (userMessage.includes("police")) {
+      setReply("Nearest police stations will appear in the Help Centers section.");
+    }
+    else if (userMessage.includes("help")) {
+      setReply("You can press the SOS button for emergency help.");
+    }
+    else {
+      setReply("Stay alert and share your live location with trusted contacts.");
+    }
+
     setMessage("");
   };
 
   return (
-    <div className="fixed bottom-4 right-4 bg-white shadow-lg p-4 rounded w-72">
-      <h3 className="font-bold mb-2">Safety Assistant</h3>
 
-      <div className="h-40 overflow-y-auto text-sm mb-2">
-        {chat.map((c, i) => (
-          <p key={i}>{c.user || c.bot}</p>
-        ))}
-      </div>
+    <div className="fixed bottom-6 right-6 bg-white shadow-lg rounded-lg p-4 w-72">
+
+      <h3 className="font-bold mb-2">
+        Safety Assistant
+      </h3>
 
       <input
-        className="border w-full p-2 text-sm"
+        type="text"
+        className="border p-2 w-full mb-2"
+        placeholder="Ask safety question..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask about safety..."
       />
 
       <button
-        onClick={sendMessage}
-        className="bg-purple-600 text-white px-3 py-1 mt-2 rounded"
+        onClick={handleSend}
+        className="bg-purple-600 text-white px-3 py-2 rounded w-full"
       >
-        Send
+        Ask
       </button>
+
+      {reply && (
+        <p className="mt-3 text-sm text-gray-700">
+          {reply}
+        </p>
+      )}
+
     </div>
   );
 }
