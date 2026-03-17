@@ -10,18 +10,27 @@ function SafetyScore({ route }) {
 
     if (!route) return;
 
-    // Fake AI scoring logic for demo
-    const randomScore = Math.floor(Math.random() * 40) + 60;
+    // 🔹 Generate consistent score based on route
+    const base =
+      Math.abs(
+        Math.floor(
+          (route.start.lat +
+           route.end.lat +
+           route.start.lng +
+           route.end.lng) * 10
+        )
+      );
 
-    setScore(randomScore);
+    const calculatedScore = 60 + (base % 40);
 
-    if (randomScore >= 85) {
+    setScore(calculatedScore);
+
+    // 🔹 Safety status
+    if (calculatedScore >= 85) {
       setStatus("Very Safe");
-    } 
-    else if (randomScore >= 70) {
+    } else if (calculatedScore >= 70) {
       setStatus("Moderately Safe");
-    } 
-    else {
+    } else {
       setStatus("Caution");
     }
 
@@ -29,6 +38,7 @@ function SafetyScore({ route }) {
 
   if (!score) return null;
 
+  // 🔹 Color logic
   const getColor = () => {
     if (score >= 85) return "bg-green-500";
     if (score >= 70) return "bg-yellow-400";
@@ -52,7 +62,7 @@ function SafetyScore({ route }) {
       </p>
 
       <p className="text-sm text-gray-500 mt-2">
-        Based on simulated crime data, lighting, and crowd density.
+        Based on route coordinates, simulated crime risk, and area conditions.
       </p>
 
     </div>

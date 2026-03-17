@@ -13,9 +13,12 @@
     "@react-google-maps/api": "^2.20.8",
     "@tailwindcss/vite": "^4.2.1",
     "leaflet": "^1.9.4",
+    "leaflet.heat": "^0.2.0",
+    "prop-types": "^15.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.13.1",
     "vite": "^5.4.21"
   },
   "devDependencies": {
