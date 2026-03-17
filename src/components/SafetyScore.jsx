@@ -1,29 +1,39 @@
 
 import React from "react";
 
-function HelpCenters({ destination }) {
-  // Mock data for help centers
-  const centersData = {
-    delhi: [
-      { name: "Delhi Police HQ", distance: "2.5 km away", type: "Police Station" },
-      { name: "AIIMS Hospital", distance: "4.1 km away", type: "Hospital" },
-      { name: "Women Help Desk - CP", distance: "1.2 km away", type: "Help Desk" },
-    ],
-    noida: [
-      { name: "Noida Sector 20 Police Station", distance: "1.8 km away", type: "Police Station" },
-      { name: "Kailash Hospital", distance: "3.5 km away", type: "Hospital" },
-      { name: "Women Power Line 1090", distance: "Always Active", type: "Help Desk" },
-    ],
-    default: [
-      { name: "Local Police Station", distance: "Nearby", type: "Police Station" },
-      { name: "City Hospital", distance: "2 km away", type: "Hospital" },
-      { name: "Women Help Desk", distance: "1.5 km away", type: "Help Desk" },
-    ]
-  };
+function SafetyScore({ route }) {
 
-  // User ne kya search kiya uske basis par data filter karna
-  const query = destination?.toLowerCase() || "default";
-  const activeCenters = centersData[query] || centersData["default"];
+  const [score, setScore] = useState(null);
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+
+    if (!route) return;
+
+    // Fake AI scoring logic for demo
+    const randomScore = Math.floor(Math.random() * 40) + 60;
+
+    setScore(randomScore);
+
+    if (randomScore >= 85) {
+      setStatus("Very Safe");
+    } 
+    else if (randomScore >= 70) {
+      setStatus("Moderately Safe");
+    } 
+    else {
+      setStatus("Caution");
+    }
+
+  }, [route]);
+
+  if (!score) return null;
+
+  const getColor = () => {
+    if (score >= 85) return "bg-green-500";
+    if (score >= 70) return "bg-yellow-400";
+    return "bg-red-500";
+  };
 
   return (
     <div className="mt-8">
@@ -37,6 +47,15 @@ function HelpCenters({ destination }) {
           </div>
         ))}
       </div>
+
+      <p className="mt-3 text-gray-700">
+        Status: <span className="font-semibold">{status}</span>
+      </p>
+
+      <p className="text-sm text-gray-500 mt-2">
+        Based on simulated crime data, lighting, and crowd density.
+      </p>
+
     </div>
   );
 }

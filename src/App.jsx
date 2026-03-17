@@ -6,18 +6,9 @@ import SafetyScore from "./components/SafetyScore";
 import SOSButton from "./components/SOSButton";
 import ChatBot from "./components/ChatBot";
 import HelpCenters from "./components/HelpCenters";
-import CameraScanner from "./components/CameraScanner";
-
-const HeroSection = () => (
-  <div className="text-center text-white py-12 px-4">
-    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-      SafeRoute AI <span className="text-purple-300">⚡</span>
-    </h1>
-    <p className="mt-4 text-lg opacity-90 max-w-2xl mx-auto">
-      Smart Navigation for Women: Real-time safety alerts and AI-driven route analysis.
-    </p>
-  </div>
-);
+import ChatBot from "./components/ChatBot";
+import RouteSearch from "./components/RouteSearch";
+import SafetyScore from "./components/SafetyScore";
 
 function App() {
   const [score, setScore] = useState(70); 
@@ -81,8 +72,15 @@ function App() {
         </aside>
       </div>
 
-      <footer className="bg-white border-t py-10 text-center text-gray-400 text-sm mt-16 font-medium">
-        <p>© 2026 SafeRoute AI • Empowering Women through Technology</p>
+      {/* Help Centers */}
+      <HelpCenters />
+
+      {/* Chatbot */}
+      <ChatBot />
+
+      {/* Footer */}
+      <footer className="text-center py-6 text-gray-600">
+        © 2026 SafeRoute AI Project
       </footer>
     </div>
   );
