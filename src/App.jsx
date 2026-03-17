@@ -8,6 +8,7 @@ import ChatBot from "./components/ChatBot";
 import RouteSearch from "./components/RouteSearch";
 import SafetyScore from "./components/SafetyScore";
 import LiveTracking from "./components/LiveTracking";
+import CameraScanner from "./components/CameraScanner";
 
 function App() {
 
@@ -60,8 +61,9 @@ function App() {
       {/* Chatbot */}
       <ChatBot />
       {/*live tracking */}
-
       <LiveTracking />
+      {/* Camera Scanner */}
+      <CameraScanner />
 
       {/* Footer */}
       <footer className="text-center py-6 text-gray-600">
