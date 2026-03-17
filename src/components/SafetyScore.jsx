@@ -10,7 +10,6 @@ function SafetyScore({ route }) {
 
     if (!route) return;
 
-    // Fake AI scoring logic for demo
     const randomScore = Math.floor(Math.random() * 40) + 60;
 
     setScore(randomScore);
