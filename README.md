@@ -47,7 +47,7 @@ Technologies used: **React, TailwindCSS, OpenAI GPT API, Leaflet.js**.
 - **Frontend:** React.js, TailwindCSS, React Router DOM
 - **AI:** OpenAI GPT API
 - **Map & Routing:** Leaflet.js
-- **Backend (Optional for AI proxy):** Node.js + Express
+- **Backend:** Firebase (Firestore + Cloud Functions)  
 
 ---
 
@@ -81,6 +81,32 @@ Technologies used: **React, TailwindCSS, OpenAI GPT API, Leaflet.js**.
 ├─ package.json
 └─ README.md
 ---
+
+
+---
+
+## 🟡 Firebase Setup
+
+### 1️⃣ Firebase Project
+
+1. Go to [Firebase Console](https://console.firebase.google.com/).  
+2. Create a new project: **SafeRoute AI**.  
+3. Enable **Firestore Database** for messages and live tracking.  
+4. Enable **Authentication** (optional) for users.
+
+### 2️⃣ Firestore Collections
+
+- **messages** → Store chat history of Safety Assistant.  
+- **sos_alerts** → Store SOS button triggers.  
+- **user_locations** → Track live location for LiveTracking component.
+
+### 3️⃣ Firebase Cloud Function (Safety Assistant)
+
+- Create a `functions` folder:
+
+```bash
+firebase init functions
+npm install axios
 
 ## ⚡ Setup Instructions (Frontend)
 
