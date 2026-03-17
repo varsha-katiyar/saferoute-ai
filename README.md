@@ -3,14 +3,16 @@
 
 ## 🚀 Project Overview
 
-**SafeRoute AI** is a hackathon project aimed at enhancing women’s safety during travel. The platform prioritizes safety over distance or speed and integrates AI-powered guidance. Key features include:
+**SafeRoute AI** is a hackathon project aimed at enhancing women’s safety during travel. The platform prioritizes safety over distance or speed and integrates AI-powered guidance.
 
-- Safe route generation with safety scores.
-- Emergency SOS alerts.
-- Help & Support section with tips.
-- AI-powered Safety Assistant Chatbot for dynamic safety advice.
+### Key Features:
 
-Technologies used: **React, TailwindCSS, OpenAI GPT API, Leaflet.js**.
+- Safe route generation with safety scores  
+- Emergency SOS alerts  
+- Help & Support section with tips  
+- AI-powered Safety Assistant Chatbot  
+
+**Tech Stack:** React, TailwindCSS, OpenAI GPT API, Leaflet.js, Firebase  
 
 ---
 
@@ -18,35 +20,34 @@ Technologies used: **React, TailwindCSS, OpenAI GPT API, Leaflet.js**.
 
 ### 1. Safe Route Finder
 
-- Input start and destination locations.
-- View safest routes highlighted in green.
-- Safety score displayed for each route.
+- Input start and destination locations  
+- View safest routes highlighted in green  
+- Safety score displayed for each route  
 
 ### 2. Emergency SOS
 
-- Press **SOS** for instant alerts to trusted contacts.
-- Shows emergency numbers and nearby help centers.
+- Press **SOS** for instant alerts to trusted contacts  
+- Shows emergency numbers and nearby help centers  
 
 ### 3. Help & Support
 
-- Step-by-step instructions on using the platform.
-- Travel safety tips.
-- Contact support email: **support@saferoute.ai**
+- Step-by-step instructions on using the platform  
+- Travel safety tips  
+- Contact support: **support@saferoute.ai**  
 
 ### 4. AI Safety Assistant Chatbot
 
-- Ask any safety-related question.
-- Collapsible interface on desktop and mobile.
-- Provides advice on routes, emergencies, police stations, and travel safety tips.
-- Powered by OpenAI GPT API.
+- Ask any safety-related question  
+- Works on both desktop and mobile  
+- Provides real-time AI-powered safety advice  
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React.js, TailwindCSS, React Router DOM
-- **AI:** OpenAI GPT API
-- **Map & Routing:** Leaflet.js
+- **Frontend:** React.js, TailwindCSS, React Router DOM  
+- **AI:** OpenAI GPT API  
+- **Maps:** Leaflet.js  
 - **Backend:** Firebase (Firestore + Cloud Functions)  
 
 ---
@@ -80,80 +81,67 @@ Technologies used: **React, TailwindCSS, OpenAI GPT API, Leaflet.js**.
 ├─ .env
 ├─ package.json
 └─ README.md
----
-
-
----
-
-## 🟡 Firebase Setup
-
-### 1️⃣ Firebase Project
-
-1. Go to [Firebase Console](https://console.firebase.google.com/).  
-2. Create a new project: **SafeRoute AI**.  
-3. Enable **Firestore Database** for messages and live tracking.  
-4. Enable **Authentication** (optional) for users.
-
-### 2️⃣ Firestore Collections
-
-- **messages** → Store chat history of Safety Assistant.  
-- **sos_alerts** → Store SOS button triggers.  
-- **user_locations** → Track live location for LiveTracking component.
-
-### 3️⃣ Firebase Cloud Function (Safety Assistant)
-
-- Create a `functions` folder:
-
-```bash
-firebase init functions
-npm install axios
-
-## ⚡ Setup Instructions (Frontend)
 
 
 ---
 
 ## 🟡 Demo & Submission Links
 
-- **Live Demo:** [Click Here](https://saferoute-ai-demo.vercel.app)  
-- **Solution PDF:** [Download PDF](https://your-storage-link.com/SafeRouteAI_Solution.pdf)  
-- **Deployed Project:** [Vercel Deployment](https://saferoute-ai.vercel.app)  
+### 🚀 Live Demo
+[Click here to view demo](https://saferoute-ai-demo.vercel.app)
+
+### 📄 Solution PDF
+[View Solution PDF](https://drive.google.com/file/d/1kwiMGh6E8BCcw-h8tOq8bW7Lmb_i-5Mp/view)
+
+### 🌐 Live Project
+[Open Deployed Project](https://saferoute-ai-three.vercel.app)
 
 ---
 
-## 🟡 Setup Instructions (Frontend)
+## 🔥 Firebase Setup
 
-1. Clone the repository:
+### 1. Create Project
+- Go to Firebase Console  
+- Create project: **SafeRoute AI**  
+- Enable Firestore Database  
 
+### 2. Collections
+- `messages` → chatbot history  
+- `sos_alerts` → emergency triggers  
+- `user_locations` → live tracking  
+
+### 3. Cloud Functions Setup
 ```bash
+firebase init functions
+npm install axios
+
+Setup Instructions (Frontend)
+1. Clone Repository
 git clone <your-repo-link>
 cd saferoute-ai
-
-Install dependencies:
-
+2. Install Dependencies
 npm install
+3. Create .env File
+VITE_OPENAI_KEY=your_openai_api_key
+4. Run Project
+npm run dev
 
-Create .env file in project root:
-
-# Replace with your OpenAI API key
-VITE_OPENAI_KEY=sk-XXXXXXXXXXXXXXXXXXXX
-
-Start development server:
-
-npm run dev   # If using Vite
-# OR
-npm start     # If using CRA
-
-Open http://localhost:5173
- in your browser.
+Open: http://localhost:5173
 
 ⚙️ Usage
 
-Home Page – Enter start and destination → Click Find Safe Route.
+Home Page → Enter locations → Find safe route
 
-Help Page – Step-by-step guidance and safety tips.
+Help Page → Get safety tips
 
-Emergency Page – Press SOS to alert contacts.
+Emergency Page → Trigger SOS alerts
 
-Safety Assistant Chatbot – Ask any safety question → get AI-powered advice.
+Chatbot → Ask safety-related questions
 
+📌 Future Improvements
+
+Real-time crime data integration
+
+Voice-enabled emergency commands
+
+AI-based risk prediction
