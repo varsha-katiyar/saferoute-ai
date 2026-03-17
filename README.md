@@ -111,16 +111,19 @@ npm install axios
 ## ⚡ Setup Instructions (Frontend)
 
 
----
 
 ## 🟡 Demo & Submission Links
 
-[Live Demo](https://saferoute-ai-demo.vercel.app)  
-[Solution PDF](https://drive.google.com/file/d/1kwiMGh6E8BCcw-h8tOq8bW7Lmb_i-5Mp/view?usp=sharing)
+### 🚀 Live Demo
+[Click here to view demo](https://saferoute-ai-demo.vercel.app)
 
-[Deployed Link](https://saferoute-ai-three.vercel.app/)
+### 📄 Solution PDF
+[View Solution PDF](https://drive.google.com/file/d/1kwiMGh6E8BCcw-h8tOq8bW7Lmb_i-5Mp/view)
 
----
+### 🌐 Live Project
+[Open Deployed Project](https://saferoute-ai-three.vercel.app)
+
+
 
 ## 🟡 Setup Instructions (Frontend)
 
