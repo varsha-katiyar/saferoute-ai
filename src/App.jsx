@@ -59,7 +59,7 @@ function App() {
       <HelpCenters />
 
       {/* Chatbot */}
-      <ChatBot />
+      <ChatBot  route={route} />
       {/*live tracking */}
       <LiveTracking />
       {/* Camera Scanner */}
