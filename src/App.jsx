@@ -8,6 +8,7 @@ import RouteSearch from "./components/RouteSearch";
 import SafetyScore from "./components/SafetyScore";
 import LiveTracking from "./components/LiveTracking";
 import CameraScanner from "./components/CameraScanner";
+import TrustedContacts from "./components/TrustedContacts";
 
 const FEATURES = [
   { icon: "🛡️", label: "Safe Routes", desc: "AI-ranked by safety score" },
@@ -115,11 +116,14 @@ function App() {
           </div>
         </div>
 
-        {/* Help Centers + Camera Scanner */}
+        {/* Trusted Contacts + Help Centers */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TrustedContacts />
           <HelpCenters />
-          <CameraScanner />
         </div>
+
+        {/* Camera Scanner */}
+        <CameraScanner />
 
       </div>
 
