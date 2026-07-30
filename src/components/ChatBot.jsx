@@ -13,12 +13,26 @@ function ChatBot({ route }) {
 
   const getAIReply = async (msg) => {
     setLoading(true);
+
+    const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+    if (!apiKey) {
+      setLoading(false);
+      console.error(
+        "VITE_OPENROUTER_API_KEY is missing. Add it to a .env file in the project root " +
+          "(e.g. VITE_OPENROUTER_API_KEY=sk-or-v1-...) and restart `npm run dev`."
+      );
+      return "AI assistant isn't configured yet — the OpenRouter API key is missing. (Check console for setup steps.)";
+    }
+
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
+          // OpenRouter asks for these on the free tier — without them some requests get silently rejected
+          "HTTP-Referer": window.location.origin,
+          "X-Title": "SafeRoute AI",
         },
         body: JSON.stringify({
           model: "openai/gpt-3.5-turbo",
@@ -34,11 +48,19 @@ function ChatBot({ route }) {
           ],
         }),
       });
+
       const data = await res.json();
-      return data?.choices?.[0]?.message?.content || "No response";
+
+      if (!res.ok) {
+        const apiMessage = data?.error?.message || res.statusText;
+        console.error("OpenRouter API error:", res.status, data);
+        return `Assistant error (${res.status}): ${apiMessage}`;
+      }
+
+      return data?.choices?.[0]?.message?.content || "No response from the model.";
     } catch (err) {
-      console.error(err);
-      return "Error getting response";
+      console.error("Network/fetch error calling OpenRouter:", err);
+      return "Couldn't reach the AI assistant — check your internet connection and try again.";
     } finally {
       setLoading(false);
     }
