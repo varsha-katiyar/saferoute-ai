@@ -1,2 +1,87 @@
-
 @import "tailwindcss";
+
+@theme {
+  /* Palette */
+  --color-ink: #12192B;
+  --color-ink-soft: #57607A;
+  --color-ink-faint: #8A93AC;
+  --color-paper: #F6F3EC;
+  --color-paper-raised: #FFFFFF;
+  --color-line: #E4DFD2;
+
+  --color-beacon: #FF6B4A;
+  --color-beacon-dim: #FFE3D9;
+  --color-safe: #2E9E6D;
+  --color-safe-dim: #E1F3EA;
+  --color-caution: #E3A73B;
+  --color-caution-dim: #FBEED9;
+  --color-alert: #D42E3C;
+  --color-alert-dim: #FBE1E1;
+
+  /* Type */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background-color: var(--color-beacon);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-beacon);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Beacon pulse — idle lighthouse sweep */
+  @keyframes beacon-pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    70% { transform: scale(1.9); opacity: 0; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+  .beacon-ring {
+    animation: beacon-pulse 2.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  }
+  .beacon-ring-fast {
+    animation: beacon-pulse 1.1s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .beacon-ring, .beacon-ring-fast {
+      animation: none;
+    }
+  }
+
+  @keyframes dot-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .live-dot {
+    animation: dot-blink 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot { animation: none; }
+  }
+
+  .grain-texture {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 18px 18px;
+  }
+}

@@ -69,47 +69,59 @@ function MapView({ route }) {
   }, [route]);
 
   return (
-    <MapContainer
-      center={[28.6139, 77.2090]}
-      zoom={12}
-      style={{ height: "500px", width: "100%" }}
-    >
+    <div className="bg-paper-raised border border-line shadow-sm rounded-2xl overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-line">
+        <h3 className="font-display text-base text-ink">Live map</h3>
+        <div className="flex items-center gap-4 text-xs text-ink-soft">
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-1 rounded-full bg-safe" /> Safest route
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-1 rounded-full bg-ink-faint" /> Alternatives
+          </span>
+        </div>
+      </div>
 
-      <TileLayer
-        attribution="&copy; OpenStreetMap"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-
-      {/* 🔹 All routes (gray) */}
-      {routes.map((r, index) => (
-        <Polyline
-          key={index}
-          positions={r}
-          pathOptions={{ color: "gray", weight: 3 }}
+      <MapContainer
+        center={[28.6139, 77.209]}
+        zoom={12}
+        style={{ height: "480px", width: "100%" }}
+      >
+        <TileLayer
+          attribution="&copy; OpenStreetMap"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      ))}
 
-      {/* 🔹 Best route (green highlight) */}
-      {bestRoute.length > 0 && (
-        <Polyline
-          positions={bestRoute}
-          pathOptions={{ color: "green", weight: 6 }}
-        />
-      )}
+        {/* 🔹 All routes (muted) */}
+        {routes.map((r, index) => (
+          <Polyline
+            key={index}
+            positions={r}
+            pathOptions={{ color: "#8A93AC", weight: 3, opacity: 0.6 }}
+          />
+        ))}
 
-      {/* 🔹 Markers */}
-      {bestRoute.length > 0 && (
-        <>
-          <Marker position={bestRoute[0]} />
-          <Marker position={bestRoute[bestRoute.length - 1]} />
-        </>
-      )}
+        {/* 🔹 Best route (safe highlight) */}
+        {bestRoute.length > 0 && (
+          <Polyline
+            positions={bestRoute}
+            pathOptions={{ color: "#2E9E6D", weight: 6 }}
+          />
+        )}
 
-      {/* 🔹 Extra Features */}
-      <UserLocation />
-      <SafetyHeatmap />
+        {/* 🔹 Markers */}
+        {bestRoute.length > 0 && (
+          <>
+            <Marker position={bestRoute[0]} />
+            <Marker position={bestRoute[bestRoute.length - 1]} />
+          </>
+        )}
 
-    </MapContainer>
+        {/* 🔹 Extra Features */}
+        <UserLocation />
+        <SafetyHeatmap />
+      </MapContainer>
+    </div>
   );
 }
 

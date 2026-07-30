@@ -1,13 +1,16 @@
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 function ChatBot({ route }) {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
+  const scrollRef = useRef(null);
 
-  // 🔹 AI API call
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [chat, loading]);
+
   const getAIReply = async (msg) => {
     setLoading(true);
     try {
@@ -22,18 +25,15 @@ function ChatBot({ route }) {
           messages: [
             {
               role: "system",
-              content:
-                "You are a women safety assistant. Give short, practical safety advice.",
+              content: "You are a women safety assistant. Give short, practical safety advice.",
             },
             {
               role: "user",
-              content: `User question: ${msg}
-Route: ${JSON.stringify(route)}`,
+              content: `User question: ${msg}\nRoute: ${JSON.stringify(route)}`,
             },
           ],
         }),
       });
-
       const data = await res.json();
       return data?.choices?.[0]?.message?.content || "No response";
     } catch (err) {
@@ -44,109 +44,99 @@ Route: ${JSON.stringify(route)}`,
     }
   };
 
-  // 🔹 Send message
   const handleSend = async () => {
     if (!message.trim()) return;
-
     const userMsg = message;
-
     setChat((prev) => [...prev, { sender: "user", text: userMsg }]);
     setMessage("");
-
     const reply = await getAIReply(userMsg);
-
     setChat((prev) => [...prev, { sender: "bot", text: reply }]);
   };
 
-  // 🔹 Voice input
-  const startVoice = () => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSend();
+  };
 
+  const startVoice = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert("Voice not supported in your browser");
+      alert("Voice input not supported in this browser.");
       return;
     }
-
     const recognition = new SpeechRecognition();
     recognition.lang = "en-IN";
-
-    recognition.onresult = (event) => {
-      const text = event.results[0][0].transcript;
-      setMessage(text);
-    };
-
+    recognition.onresult = (event) => setMessage(event.results[0][0].transcript);
     recognition.start();
   };
 
   return (
     <>
-      {/* 🔹 Floating Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 bg-purple-600 text-white px-4 py-3 rounded-full shadow-lg"
+        aria-label="Open safety assistant"
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-ink text-paper shadow-xl hover:bg-ink/90 active:scale-95 transition-all flex items-center justify-center"
       >
-        💬
+        {isOpen ? (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        ) : (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.17 0-2.29-.2-3.31-.56L3 21l1.67-4.17C3.61 15.5 3 13.82 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" /></svg>
+        )}
       </button>
 
-      {/* 🔹 Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 right-6 bg-white shadow-xl rounded-lg w-80 p-4">
-
-          {/* Header */}
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="font-bold">AI Safety Assistant</h3>
-            <button onClick={() => setIsOpen(false)}>❌</button>
+        <div className="fixed bottom-24 right-6 z-50 w-[calc(100vw-3rem)] max-w-sm bg-paper-raised border border-line shadow-2xl rounded-2xl overflow-hidden flex flex-col">
+          <div className="bg-ink text-paper px-4 py-3 flex items-center justify-between">
+            <div>
+              <h3 className="font-display text-sm">AI Safety Assistant</h3>
+              <p className="text-[11px] text-paper/60">Ask anything about your route</p>
+            </div>
+            <span className="h-2 w-2 rounded-full bg-safe live-dot" />
           </div>
 
-          {/* Messages */}
-          <div className="h-52 overflow-y-auto border p-2 mb-2 rounded">
+          <div ref={scrollRef} className="h-64 overflow-y-auto px-3 py-3 space-y-2 bg-paper">
+            {chat.length === 0 && (
+              <p className="text-xs text-ink-faint text-center mt-8">
+                Try: "Is it safe to travel alone at night here?"
+              </p>
+            )}
             {chat.map((msg, i) => (
-              <div
-                key={i}
-                className={`mb-2 ${
-                  msg.sender === "user" ? "text-right" : "text-left"
-                }`}
-              >
+              <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                 <span
-                  className={`px-2 py-1 rounded ${
+                  className={`inline-block px-3 py-2 rounded-2xl text-sm max-w-[85%] ${
                     msg.sender === "user"
-                      ? "bg-purple-200"
-                      : "bg-gray-200"
+                      ? "bg-ink text-paper rounded-br-sm"
+                      : "bg-white border border-line text-ink rounded-bl-sm"
                   }`}
                 >
                   {msg.text}
                 </span>
               </div>
             ))}
-            {loading && <p className="text-sm">Typing...</p>}
+            {loading && <p className="text-xs text-ink-faint px-1">Typing…</p>}
           </div>
 
-          {/* Input */}
-          <input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Ask safety question..."
-            className="border p-2 w-full mb-2 rounded"
-          />
-
-          {/* Buttons */}
-          <div className="flex gap-2">
+          <div className="p-2.5 border-t border-line flex gap-2 bg-paper-raised">
             <button
               onClick={startVoice}
-              className="bg-gray-200 px-3 py-2 rounded w-1/3"
+              aria-label="Voice input"
+              className="h-10 w-10 shrink-0 rounded-xl border border-line hover:bg-paper transition-colors flex items-center justify-center"
             >
               🎤
             </button>
-
+            <input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask a safety question…"
+              className="flex-1 min-w-0 border border-line rounded-xl px-3 text-sm outline-none focus:border-beacon transition-colors"
+            />
             <button
               onClick={handleSend}
-              className="bg-purple-600 text-white px-3 py-2 rounded w-2/3"
+              className="h-10 shrink-0 px-4 rounded-xl bg-beacon text-white text-sm font-semibold hover:bg-beacon/90 transition-colors"
             >
               Send
             </button>
           </div>
-
         </div>
       )}
     </>
